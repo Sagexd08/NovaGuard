@@ -53,15 +53,15 @@ const GEMMA_CONFIG = {
   }
 };
 
-// Enhanced multi-agent audit analysis function with backend controller integration
-const analyzeContract = async (contractCode, options = {}) => {
-  const kimiModel = process.env.KIMI_MODEL || 'moonshotai/kimi-dev-72b:free';
-  const gemmaModel = process.env.GEMMA_MODEL || 'google/gemma-3n-e4b-it:free';
+// Import the advanced Multi-Agent Orchestrator
+const MultiAgentOrchestrator = require('../agents/multi-agent-orchestrator');
 
+// Enhanced multi-agent audit analysis function with NovaGuard AI system
+const analyzeContract = async (contractCode, options = {}) => {
   // Generate unique audit ID
   const auditId = `audit_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-  // Validate input (from backend controller logic)
+  // Validate input
   if (!contractCode || contractCode.trim().length < 10) {
     throw new Error('Contract code must be at least 10 characters long');
   }
@@ -69,6 +69,9 @@ const analyzeContract = async (contractCode, options = {}) => {
   if (contractCode.length > 1000000) {
     throw new Error('Contract code exceeds maximum size of 1MB');
   }
+
+  // Initialize the Multi-Agent Orchestrator
+  const orchestrator = new MultiAgentOrchestrator();
 
   // Multi-agent analysis configuration (from backend controller)
   const agents = options.agents || ['security', 'quality', 'economics'];
@@ -164,82 +167,67 @@ const analyzeContract = async (contractCode, options = {}) => {
         });
     }
 
-    // Use Kimi for comprehensive security analysis
-    const securityResponse = await axios.post(`${KIMI_CONFIG.baseURL}/chat/completions`, {
-      model: kimiModel,
-      messages: [{ role: 'user', content: securityPrompt }],
-      temperature: 0.1,
-      max_tokens: 3000
-    }, KIMI_CONFIG);
+    // Execute comprehensive multi-agent analysis
+    console.log(`🚀 Starting NovaGuard multi-agent analysis: ${auditId}`);
 
-    let analysisResult;
-    try {
-      const content = securityResponse.data.choices[0].message.content;
-      // Extract JSON from response
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        analysisResult = JSON.parse(jsonMatch[0]);
+    const analysisOptions = {
+      auditId,
+      userId: options.userId,
+      contractId: options.contractId,
+      chain: options.chain || 'ethereum',
+      analysisMode: options.analysisMode || 'comprehensive',
+      agents: options.agents || ['security', 'gasOptimizer', 'tokenomics'],
+      strategy: options.strategy || 'adaptive'
+    };
 
-        // Add audit metadata
-        analysisResult.auditId = auditId;
-        analysisResult.timestamp = new Date().toISOString();
-        analysisResult.analysisMode = options.analysisMode || 'comprehensive';
-        analysisResult.chain = options.chain || 'ethereum';
+    const multiAgentResults = await orchestrator.analyzeContract(contractCode, analysisOptions);
 
-      } else {
-        throw new Error('No JSON found in response');
-      }
-    } catch (parseError) {
-      console.error('Analysis parsing error:', parseError);
+    console.log(`✅ Multi-agent analysis completed: ${multiAgentResults.agentsUsed.join(', ')}`);
 
-      // Fallback result if parsing fails
-      analysisResult = {
-        auditId,
-        vulnerabilities: [{
-          name: "Analysis Error",
-          affectedLines: "N/A",
-          description: "Unable to parse security analysis results",
-          severity: "medium",
-          fixSuggestion: "Manual review recommended",
-          category: "other"
-        }],
-        securityScore: 50,
-        riskCategory: {
-          label: "medium",
-          justification: "Analysis incomplete due to parsing error"
-        },
-        codeInsights: {
-          gasOptimizationTips: ["Review contract for optimization opportunities"],
-          antiPatternNotices: ["Manual code review recommended"],
-          dangerousUsage: ["Check for common vulnerabilities manually"],
-          bestPractices: ["Perform manual security audit"]
-        },
-        defiAnalysis: {
-          tokenomics: "Manual analysis required",
-          liquidityRisks: ["Unable to analyze automatically"],
-          flashLoanVulnerabilities: ["Manual review needed"]
-        }
-      };
-    }
+    // Transform results to match expected format
+    const result = {
+      auditId: multiAgentResults.auditId,
+      vulnerabilities: multiAgentResults.vulnerabilities || [],
+      securityScore: multiAgentResults.securityScore || 50,
+      gasOptimizationScore: multiAgentResults.gasScore || 50,
+      tokenomicsScore: multiAgentResults.tokenomicsScore || 50,
+      overallScore: multiAgentResults.overallScore || 50,
+      riskCategory: {
+        label: multiAgentResults.riskCategory || 'medium',
+        justification: multiAgentResults.summary?.recommendedActions || 'Analysis completed'
+      },
+      codeInsights: {
+        gasOptimizationTips: multiAgentResults.gasOptimizations?.map(opt => opt.description) || [],
+        antiPatternNotices: multiAgentResults.vulnerabilities?.filter(v => v.type?.includes('pattern')).map(v => v.description) || [],
+        dangerousUsage: multiAgentResults.vulnerabilities?.filter(v => v.severity === 'critical').map(v => v.description) || [],
+        tokenomicsFindings: multiAgentResults.tokenomicsFindings || [],
+        recommendations: multiAgentResults.recommendations || []
+      },
+      agentResults: multiAgentResults.agentResults || [],
+      crossValidation: multiAgentResults.crossValidation || {},
+      executionTime: multiAgentResults.executionTime || 0,
+      agentsUsed: multiAgentResults.agentsUsed || [],
+      strategy: multiAgentResults.strategy || 'adaptive'
+    };
 
-    // Log successful analysis to database
+    // Update audit log with completion status
     if (supabaseAdmin && options.userId) {
       await supabaseAdmin
         .from('audit_logs')
         .update({
           status: 'completed',
-          result: analysisResult,
-          security_score: analysisResult.securityScore,
-          risk_level: analysisResult.riskCategory.label,
-          vulnerabilities_count: analysisResult.vulnerabilities.length,
-          completed_at: new Date().toISOString()
+          execution_time: result.executionTime,
+          agents_requested: result.agentsUsed,
+          credits_used: result.agentsUsed.length
         })
         .eq('audit_id', auditId);
     }
 
-    return analysisResult;
+    console.log(`🎉 NovaGuard analysis completed successfully: ${auditId}`);
+
+    return result;
   } catch (error) {
-    console.error('Contract analysis error:', error);
+    console.error('🚨 NovaGuard analysis error:', error);
 
     // Log error to database
     if (supabaseAdmin && options.userId) {
@@ -253,16 +241,16 @@ const analyzeContract = async (contractCode, options = {}) => {
         .eq('audit_id', auditId);
     }
 
-    // Return error result
+    // Return error result with NovaGuard format
     return {
       auditId,
       vulnerabilities: [{
-        name: "Analysis Service Error",
+        name: "NovaGuard Analysis Service Error",
         affectedLines: "N/A",
-        description: `Failed to analyze contract: ${error.message}`,
+        description: `Multi-agent analysis failed: ${error.message}`,
         severity: "high",
         fixSuggestion: "Retry analysis or perform manual review",
-        category: "other"
+        type: "system_error"
       }],
       securityScore: 0,
       riskCategory: {

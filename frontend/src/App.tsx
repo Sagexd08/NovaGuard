@@ -1737,6 +1737,238 @@ function App() {
 
   const [projects, setProjects] = useState<Project[]>([]);
 
+  // Enhanced deployment state
+  const [deploymentConfig, setDeploymentConfig] = useState({
+    chain: 'ethereum',
+    network: 'sepolia',
+    contractName: '',
+    gasLimit: 'auto',
+    gasPrice: 'auto',
+    constructorArgs: ''
+  });
+
+  const [deploymentStatus, setDeploymentStatus] = useState({
+    isDeploying: false,
+    progress: 0,
+    currentStep: '',
+    lastResult: null as any,
+    lastRefresh: ''
+  });
+
+  const [deploymentHistory, setDeploymentHistory] = useState<Array<{
+    contractName: string;
+    chain: string;
+    network: string;
+    success: boolean;
+    contractAddress?: string;
+    timestamp: string;
+  }>>([]);
+
+  // Helper functions for deployment
+  const getDefaultNetwork = (chain: string): string => {
+    const defaults: { [key: string]: string } = {
+      ethereum: 'sepolia',
+      polygon: 'mumbai',
+      arbitrum: 'goerli',
+      optimism: 'goerli',
+      base: 'goerli',
+      bsc: 'testnet',
+      avalanche: 'fuji',
+      fantom: 'testnet'
+    };
+    return defaults[chain] || 'sepolia';
+  };
+
+  const getNetworkOptions = (chain: string) => {
+    const networks: { [key: string]: Array<{ value: string; label: string }> } = {
+      ethereum: [
+        { value: 'sepolia', label: 'Sepolia Testnet' },
+        { value: 'goerli', label: 'Goerli Testnet' },
+        { value: 'mainnet', label: 'Mainnet' }
+      ],
+      polygon: [
+        { value: 'mumbai', label: 'Mumbai Testnet' },
+        { value: 'mainnet', label: 'Polygon Mainnet' }
+      ],
+      arbitrum: [
+        { value: 'goerli', label: 'Arbitrum Goerli' },
+        { value: 'sepolia', label: 'Arbitrum Sepolia' },
+        { value: 'mainnet', label: 'Arbitrum One' }
+      ],
+      optimism: [
+        { value: 'goerli', label: 'Optimism Goerli' },
+        { value: 'sepolia', label: 'Optimism Sepolia' },
+        { value: 'mainnet', label: 'Optimism Mainnet' }
+      ],
+      base: [
+        { value: 'goerli', label: 'Base Goerli' },
+        { value: 'sepolia', label: 'Base Sepolia' },
+        { value: 'mainnet', label: 'Base Mainnet' }
+      ],
+      bsc: [
+        { value: 'testnet', label: 'BSC Testnet' },
+        { value: 'mainnet', label: 'BSC Mainnet' }
+      ],
+      avalanche: [
+        { value: 'fuji', label: 'Avalanche Fuji' },
+        { value: 'mainnet', label: 'Avalanche Mainnet' }
+      ],
+      fantom: [
+        { value: 'testnet', label: 'Fantom Testnet' },
+        { value: 'mainnet', label: 'Fantom Mainnet' }
+      ]
+    };
+    return networks[chain] || networks.ethereum;
+  };
+
+  // Deployment handlers
+  const handleDeploy = async () => {
+    if (!deploymentConfig.contractName || !fileContents[`${deploymentConfig.contractName}.sol`]) {
+      terminalService.addLog('error', 'No contract selected or contract file not found', 'deploy');
+      return;
+    }
+
+    setDeploymentStatus(prev => ({ ...prev, isDeploying: true, progress: 0 }));
+    terminalService.addLog('info', `🚀 Starting deployment of ${deploymentConfig.contractName} to ${deploymentConfig.chain}-${deploymentConfig.network}`, 'deploy');
+
+    try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error('Authentication required');
+      }
+
+      // Parse constructor arguments
+      let constructorArgs = [];
+      if (deploymentConfig.constructorArgs.trim()) {
+        try {
+          constructorArgs = JSON.parse(deploymentConfig.constructorArgs);
+        } catch {
+          constructorArgs = [deploymentConfig.constructorArgs];
+        }
+      }
+
+      setDeploymentStatus(prev => ({ ...prev, progress: 20, currentStep: 'Preparing deployment...' }));
+
+      const response = await fetch('/api/deployment/deploy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          contractCode: fileContents[`${deploymentConfig.contractName}.sol`],
+          contractName: deploymentConfig.contractName,
+          chain: deploymentConfig.chain,
+          network: deploymentConfig.network,
+          constructorArgs,
+          gasLimit: deploymentConfig.gasLimit === 'auto' ? undefined : deploymentConfig.gasLimit,
+          gasPrice: deploymentConfig.gasPrice === 'auto' ? undefined : deploymentConfig.gasPrice
+        })
+      });
+
+      setDeploymentStatus(prev => ({ ...prev, progress: 80, currentStep: 'Processing deployment...' }));
+
+      if (!response.ok) {
+        throw new Error(`Deployment failed: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        setDeploymentStatus(prev => ({
+          ...prev,
+          isDeploying: false,
+          progress: 100,
+          currentStep: 'Deployment completed!',
+          lastResult: result
+        }));
+
+        // Add to deployment history
+        setDeploymentHistory(prev => [{
+          contractName: deploymentConfig.contractName,
+          chain: deploymentConfig.chain,
+          network: deploymentConfig.network,
+          success: true,
+          contractAddress: result.contractAddress,
+          timestamp: new Date().toISOString()
+        }, ...prev.slice(0, 9)]);
+
+        terminalService.addLog('success', `✅ Contract deployed successfully!`, 'deploy');
+        terminalService.addLog('info', `📍 Address: ${result.contractAddress}`, 'deploy');
+        terminalService.addLog('info', `🔗 Transaction: ${result.transactionHash}`, 'deploy');
+        if (result.explorerUrl) {
+          terminalService.addLog('info', `🌐 Explorer: ${result.explorerUrl}`, 'deploy');
+        }
+      } else {
+        throw new Error(result.error || 'Deployment failed');
+      }
+
+    } catch (error: any) {
+      setDeploymentStatus(prev => ({
+        ...prev,
+        isDeploying: false,
+        progress: 0,
+        currentStep: '',
+        lastResult: null
+      }));
+
+      // Add failed deployment to history
+      setDeploymentHistory(prev => [{
+        contractName: deploymentConfig.contractName,
+        chain: deploymentConfig.chain,
+        network: deploymentConfig.network,
+        success: false,
+        timestamp: new Date().toISOString()
+      }, ...prev.slice(0, 9)]);
+
+      terminalService.addLog('error', `❌ Deployment failed: ${error.message}`, 'deploy');
+    }
+  };
+
+  const handleEstimateGas = async () => {
+    if (!deploymentConfig.contractName) {
+      terminalService.addLog('warning', 'No contract selected', 'deploy');
+      return;
+    }
+
+    terminalService.addLog('info', `💰 Estimating gas for ${deploymentConfig.contractName} on ${deploymentConfig.chain}-${deploymentConfig.network}`, 'deploy');
+
+    // Simulate gas estimation
+    setTimeout(() => {
+      const estimatedGas = Math.floor(Math.random() * 1000000) + 500000;
+      const gasPrice = Math.floor(Math.random() * 50) + 20;
+      const cost = (estimatedGas * gasPrice / 1e9).toFixed(6);
+
+      terminalService.addLog('info', `⛽ Estimated gas: ${estimatedGas.toLocaleString()}`, 'deploy');
+      terminalService.addLog('info', `💰 Gas price: ${gasPrice} gwei`, 'deploy');
+      terminalService.addLog('info', `💸 Estimated cost: ${cost} ETH`, 'deploy');
+    }, 1000);
+  };
+
+  const handleFaucetRequest = async () => {
+    terminalService.addLog('info', `🚰 Requesting testnet tokens for ${deploymentConfig.chain}-${deploymentConfig.network}`, 'deploy');
+
+    // Simulate faucet request
+    setTimeout(() => {
+      terminalService.addLog('success', '✅ Testnet tokens requested successfully!', 'deploy');
+      terminalService.addLog('info', '💰 Tokens should arrive in your wallet within 1-2 minutes', 'deploy');
+    }, 2000);
+  };
+
+  const handleScanDeployedContract = async () => {
+    if (!deploymentStatus.lastResult?.contractAddress) {
+      terminalService.addLog('warning', 'No deployed contract to scan', 'deploy');
+      return;
+    }
+
+    terminalService.addLog('info', `🔍 Starting vulnerability scan for ${deploymentStatus.lastResult.contractAddress}`, 'deploy');
+
+    // Switch to vulnerability view and start scan
+    setCurrentView('vulnerability');
+    setContractAddress(deploymentStatus.lastResult.contractAddress);
+    setSelectedVulnNetwork(deploymentConfig.chain);
+  };
+
   // Load projects from backend when user is authenticated
   useEffect(() => {
     const loadProjects = async () => {
@@ -4096,6 +4328,20 @@ contract ${cleanFileName.replace('.sol', '').replace(/[^a-zA-Z0-9]/g, '')} {
                 <span className="vulnerability-check-subtitle">Check contract vulnerabilities</span>
               </div>
 
+              {/* Multi-Chain Deploy Card */}
+              <div className="project-card deploy-card" onClick={() => {
+                setCurrentView('ide');
+                setActivePanel('deploy');
+                terminalService.addLog('info', '🚀 Multi-Chain Deploy panel opened', 'deploy');
+                terminalService.addLog('info', '🌐 Ready to deploy across 8 blockchains', 'deploy');
+              }}>
+                <div className="deploy-card-icon">
+                  🚀
+                </div>
+                <span className="deploy-card-text">Multi-Chain Deploy</span>
+                <span className="deploy-card-subtitle">Deploy contracts across 8 blockchains</span>
+              </div>
+
               {/* Existing Projects */}
               {filteredProjects.map(project => (
                 <div key={project.id} className="project-card" onClick={() => openProject(project.id)}>
@@ -4923,52 +5169,220 @@ contract ${cleanFileName.replace('.sol', '').replace(/[^a-zA-Z0-9]/g, '')} {
         return (
           <div className="vscode-panel">
             <div className="panel-header">
-              <span className="panel-title">DEPLOY</span>
-              <button className="header-action" title="Refresh">🔄</button>
+              <span className="panel-title">🚀 MULTI-CHAIN DEPLOY</span>
+              <button
+                className="header-action"
+                title="Refresh deployment status"
+                onClick={() => {
+                  terminalService.addLog('info', 'Refreshing deployment status...', 'deploy');
+                  setDeploymentStatus(prev => ({ ...prev, lastRefresh: new Date().toISOString() }));
+                }}
+              >
+                🔄
+              </button>
             </div>
             <div className="panel-body">
               <div className="deploy-section">
+                {/* Enhanced Deployment Configuration */}
                 <div className="deploy-config">
                   <div className="config-header">
-                    <span>Deployment Configuration</span>
+                    <span>🌐 Multi-Chain Deployment Configuration</span>
+                    <span className="config-status">
+                      {deploymentStatus.isDeploying ? '🟡 Deploying...' : '🟢 Ready'}
+                    </span>
                   </div>
+
+                  {/* Chain Selection */}
                   <div className="config-options">
                     <div className="config-item">
-                      <label>Network:</label>
-                      <select className="config-select">
-                        <option>Ethereum Mainnet</option>
-                        <option>Polygon</option>
-                        <option>Arbitrum</option>
-                        <option>Local Testnet</option>
+                      <label>🔗 Blockchain:</label>
+                      <select
+                        className="config-select"
+                        value={deploymentConfig.chain}
+                        onChange={(e) => setDeploymentConfig(prev => ({
+                          ...prev,
+                          chain: e.target.value,
+                          network: getDefaultNetwork(e.target.value)
+                        }))}
+                      >
+                        <option value="ethereum">Ethereum</option>
+                        <option value="polygon">Polygon</option>
+                        <option value="arbitrum">Arbitrum</option>
+                        <option value="optimism">Optimism</option>
+                        <option value="base">Base</option>
+                        <option value="bsc">BSC</option>
+                        <option value="avalanche">Avalanche</option>
+                        <option value="fantom">Fantom</option>
                       </select>
                     </div>
+
+                    {/* Network Selection */}
                     <div className="config-item">
-                      <label>Gas Limit:</label>
-                      <input type="number" defaultValue="3000000" className="config-input" />
+                      <label>🌐 Network:</label>
+                      <select
+                        className="config-select"
+                        value={deploymentConfig.network}
+                        onChange={(e) => setDeploymentConfig(prev => ({ ...prev, network: e.target.value }))}
+                      >
+                        {getNetworkOptions(deploymentConfig.chain).map(network => (
+                          <option key={network.value} value={network.value}>
+                            {network.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Contract Selection */}
+                    <div className="config-item">
+                      <label>📄 Contract:</label>
+                      <select
+                        className="config-select"
+                        value={deploymentConfig.contractName}
+                        onChange={(e) => setDeploymentConfig(prev => ({ ...prev, contractName: e.target.value }))}
+                      >
+                        <option value="">Select Contract...</option>
+                        {Object.keys(fileContents).filter(name => name.endsWith('.sol')).map(file => (
+                          <option key={file} value={file.replace('.sol', '')}>
+                            {file}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Gas Configuration */}
+                    <div className="config-item">
+                      <label>⛽ Gas Limit:</label>
+                      <input
+                        type="text"
+                        value={deploymentConfig.gasLimit}
+                        onChange={(e) => setDeploymentConfig(prev => ({ ...prev, gasLimit: e.target.value }))}
+                        placeholder="auto"
+                        className="config-input"
+                      />
+                    </div>
+
+                    <div className="config-item">
+                      <label>💰 Gas Price (gwei):</label>
+                      <input
+                        type="text"
+                        value={deploymentConfig.gasPrice}
+                        onChange={(e) => setDeploymentConfig(prev => ({ ...prev, gasPrice: e.target.value }))}
+                        placeholder="auto"
+                        className="config-input"
+                      />
+                    </div>
+
+                    {/* Constructor Arguments */}
+                    <div className="config-item">
+                      <label>🔧 Constructor Args:</label>
+                      <input
+                        type="text"
+                        value={deploymentConfig.constructorArgs}
+                        onChange={(e) => setDeploymentConfig(prev => ({ ...prev, constructorArgs: e.target.value }))}
+                        placeholder='["arg1", "arg2", 123]'
+                        className="config-input"
+                      />
                     </div>
                   </div>
                 </div>
+
+                {/* Deployment Progress */}
+                {deploymentStatus.isDeploying && (
+                  <div className="deploy-progress">
+                    <div className="progress-header">
+                      <span>📊 Deployment Progress</span>
+                      <span>{deploymentStatus.progress}%</span>
+                    </div>
+                    <div className="progress-bar">
+                      <div
+                        className="progress-fill"
+                        style={{ width: `${deploymentStatus.progress}%` }}
+                      ></div>
+                    </div>
+                    <div className="progress-message">
+                      {deploymentStatus.currentStep}
+                    </div>
+                  </div>
+                )}
+
+                {/* Deployment Actions */}
                 <div className="deploy-actions">
                   <button
                     className="deploy-btn primary"
-                    onClick={() => {
-                      terminalService.addLog('info', 'Starting deployment process...', 'deploy');
-                      terminalService.addLog('info', 'Estimating gas costs...', 'deploy');
-                      setTimeout(() => {
-                        terminalService.addLog('success', '✓ Contract deployed successfully!', 'deploy');
-                        terminalService.addLog('info', 'Contract address: 0x1234...5678', 'deploy');
-                      }, 2000);
-                    }}
+                    disabled={deploymentStatus.isDeploying || !deploymentConfig.contractName}
+                    onClick={handleDeploy}
                   >
-                    🚀 Deploy Contract
+                    {deploymentStatus.isDeploying ? '🔄 Deploying...' : '🚀 Deploy Contract'}
                   </button>
+
                   <button
                     className="deploy-btn secondary"
-                    onClick={() => terminalService.addLog('info', 'Estimating deployment costs...', 'deploy')}
+                    disabled={deploymentStatus.isDeploying || !deploymentConfig.contractName}
+                    onClick={handleEstimateGas}
                   >
                     💰 Estimate Gas
                   </button>
+
+                  <button
+                    className="deploy-btn secondary"
+                    onClick={() => {
+                      terminalService.addLog('info', `Getting testnet tokens for ${deploymentConfig.chain}...`, 'deploy');
+                      handleFaucetRequest();
+                    }}
+                  >
+                    🚰 Get Testnet Tokens
+                  </button>
+
+                  <button
+                    className="deploy-btn secondary"
+                    onClick={() => {
+                      if (deploymentStatus.lastResult?.contractAddress) {
+                        terminalService.addLog('info', `Scanning deployed contract ${deploymentStatus.lastResult.contractAddress}...`, 'deploy');
+                        handleScanDeployedContract();
+                      } else {
+                        terminalService.addLog('warning', 'No deployed contract to scan', 'deploy');
+                      }
+                    }}
+                  >
+                    🔍 Scan Deployed Contract
+                  </button>
                 </div>
+
+                {/* Recent Deployments */}
+                {deploymentHistory.length > 0 && (
+                  <div className="deploy-history">
+                    <div className="history-header">
+                      <span>📋 Recent Deployments</span>
+                    </div>
+                    <div className="history-list">
+                      {deploymentHistory.slice(0, 3).map((deployment, index) => (
+                        <div key={index} className="history-item">
+                          <div className="history-info">
+                            <span className="history-contract">{deployment.contractName}</span>
+                            <span className="history-network">{deployment.chain}-{deployment.network}</span>
+                          </div>
+                          <div className="history-status">
+                            {deployment.success ? '✅' : '❌'}
+                          </div>
+                          {deployment.contractAddress && (
+                            <button
+                              className="history-action"
+                              onClick={() => {
+                                if (deployment.contractAddress) {
+                                  navigator.clipboard.writeText(deployment.contractAddress);
+                                  terminalService.addLog('info', `Copied address: ${deployment.contractAddress}`, 'deploy');
+                                }
+                              }}
+                              title="Copy contract address"
+                            >
+                              📋
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

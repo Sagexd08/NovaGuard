@@ -55,7 +55,46 @@ export interface HealthResponse {
   };
 }
 
-class ApiService {
+export class ApiService {
+  private static instance: ApiService;
+
+  static getInstance(): ApiService {
+    if (!this.instance) {
+      this.instance = new ApiService();
+    }
+    return this.instance;
+  }
+
+  // Generic request methods
+  async get<T>(endpoint: string, headers?: Record<string, string>): Promise<T> {
+    return this.makeRequest<T>(endpoint, {
+      method: 'GET',
+      headers
+    });
+  }
+
+  async post<T>(endpoint: string, data?: any, headers?: Record<string, string>): Promise<T> {
+    return this.makeRequest<T>(endpoint, {
+      method: 'POST',
+      body: data ? JSON.stringify(data) : undefined,
+      headers
+    });
+  }
+
+  async put<T>(endpoint: string, data?: any, headers?: Record<string, string>): Promise<T> {
+    return this.makeRequest<T>(endpoint, {
+      method: 'PUT',
+      body: data ? JSON.stringify(data) : undefined,
+      headers
+    });
+  }
+
+  async delete<T>(endpoint: string, headers?: Record<string, string>): Promise<T> {
+    return this.makeRequest<T>(endpoint, {
+      method: 'DELETE',
+      headers
+    });
+  }
   private async makeRequest<T>(
     endpoint: string,
     options: RequestInit = {}

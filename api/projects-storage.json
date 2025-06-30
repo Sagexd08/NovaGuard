@@ -1138,5 +1138,1139 @@
     },
     "created_at": "2025-06-29T01:56:32.808Z",
     "updated_at": "2025-06-29T01:56:32.808Z"
+  },
+  {
+    "project_id": "project_1751167546197_0qelcv1gg",
+    "name": "Blank Template 8unzqa",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T03:25:46.197Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T03:25:46.198Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T03:25:46.198Z",
+    "updated_at": "2025-06-29T03:25:46.198Z"
+  },
+  {
+    "project_id": "project_1751167587539_b2xv4nliv",
+    "name": "Blank Template 6ujwze",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T03:26:27.539Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T03:26:27.540Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T03:26:27.540Z",
+    "updated_at": "2025-06-29T03:26:27.540Z"
+  },
+  {
+    "project_id": "project_1751168958340_gcrjpqp6o",
+    "name": "Blank Template 33lsvd",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T03:49:18.340Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T03:49:18.340Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T03:49:18.340Z",
+    "updated_at": "2025-06-29T03:49:18.340Z"
+  },
+  {
+    "project_id": "project_1751170039405_8hr4t9p1c",
+    "name": "Blank Template 7vhae4",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T04:07:19.405Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T04:07:19.405Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T04:07:19.405Z",
+    "updated_at": "2025-06-29T04:07:19.405Z"
+  },
+  {
+    "project_id": "project_1751171214875_1quzahi30",
+    "name": "Blank Template jkzsgn",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T04:26:54.875Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T04:26:54.875Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T04:26:54.875Z",
+    "updated_at": "2025-06-29T04:26:54.875Z"
+  },
+  {
+    "project_id": "project_1751171355911_dylwyedql",
+    "name": "Blank Template pbnja5",
+    "description": "This is a blank template for the Aptos blockchain using Move language.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "aptos",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T04:29:15.911Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T04:29:15.911Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Aptos",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T04:29:15.911Z",
+    "updated_at": "2025-06-29T04:29:15.911Z"
+  },
+  {
+    "project_id": "project_1751171815275_zxiy47is3",
+    "name": "Blank Template 6am3dm",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T04:36:55.275Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T04:36:55.275Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T04:36:55.275Z",
+    "updated_at": "2025-06-29T04:36:55.275Z"
+  },
+  {
+    "project_id": "project_1751181968999_mkrh9wfyr",
+    "name": "Blank Template md4hhl",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T07:26:08.999Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T07:26:08.999Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T07:26:08.999Z",
+    "updated_at": "2025-06-29T07:26:08.999Z"
+  },
+  {
+    "project_id": "project_1751182803863_m6g122mxp",
+    "name": "Blank Template z6ccnz",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T07:40:03.864Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T07:40:03.864Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T07:40:03.864Z",
+    "updated_at": "2025-06-29T07:40:03.864Z"
+  },
+  {
+    "project_id": "project_1751183242804_wbm1x6vf8",
+    "name": "Blank Template let8uk",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T07:47:22.804Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T07:47:22.805Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T07:47:22.805Z",
+    "updated_at": "2025-06-29T07:47:22.805Z"
+  },
+  {
+    "project_id": "project_1751183442531_r8a1042d7",
+    "name": "Blank Template fdx2fp",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T07:50:42.531Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T07:50:42.531Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T07:50:42.531Z",
+    "updated_at": "2025-06-29T07:50:42.531Z"
+  },
+  {
+    "project_id": "project_1751183502448_s3g7q4e1e",
+    "name": "Blank Template mj7d85",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T07:51:42.448Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T07:51:42.448Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T07:51:42.448Z",
+    "updated_at": "2025-06-29T07:51:42.448Z"
+  },
+  {
+    "project_id": "project_1751184464599_hl7fc0m9q",
+    "name": "Blank Template tenzmi",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T08:07:44.599Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T08:07:44.599Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T08:07:44.599Z",
+    "updated_at": "2025-06-29T08:07:44.599Z"
+  },
+  {
+    "project_id": "project_1751184540432_yzcyboz5m",
+    "name": "Blank Template fw1na2",
+    "description": "This is a blank template for the Ethereum blockchain.",
+    "type": "contract",
+    "status": "planning",
+    "visibility": "private",
+    "owner_id": "dev_user_consistent",
+    "template": "Blank Template",
+    "network": "ethereum",
+    "contract_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\ncontract BlankTemplate {\n    // Your contract code here\n}",
+    "team_members": [
+      {
+        "userId": "dev_user_consistent",
+        "email": "dev@example.com",
+        "role": "owner",
+        "permissions": [
+          "read",
+          "write",
+          "admin",
+          "delete",
+          "invite",
+          "deploy",
+          "audit"
+        ],
+        "joinedAt": "2025-06-29T08:09:00.432Z",
+        "status": "active"
+      }
+    ],
+    "settings": {
+      "allowCollaboration": true,
+      "autoAudit": true,
+      "notifications": true,
+      "realTimeSync": true,
+      "codeReview": true,
+      "securityScanning": true,
+      "gasOptimization": true,
+      "deploymentPipeline": false
+    },
+    "contracts": [],
+    "audits": [],
+    "deployments": [],
+    "milestones": [],
+    "tags": [],
+    "integrations": {
+      "github": null,
+      "chainide": null,
+      "hardhat": null,
+      "foundry": null
+    },
+    "analytics": {
+      "totalCommits": 0,
+      "totalAudits": 0,
+      "totalDeployments": 0,
+      "securityScore": 0,
+      "qualityScore": 0,
+      "lastActivity": "2025-06-29T08:09:00.432Z",
+      "memberActivity": {},
+      "collaborationScore": 0
+    },
+    "collaboration": {
+      "activeReviews": [],
+      "sharedWorkspaces": [],
+      "teamAnalytics": {
+        "memberActivity": {},
+        "collaborationScore": 0
+      }
+    },
+    "project_data": {
+      "template": "Blank Template",
+      "category": "Basic",
+      "network": "Ethereum",
+      "files": [
+        "contracts/BlankContract.sol",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "created_at": "2025-06-29T08:09:00.432Z",
+    "updated_at": "2025-06-29T08:09:00.432Z"
   }
 ]

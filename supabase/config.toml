@@ -1,6 +1,6 @@
 # A string used to distinguish different Supabase projects on the same machine.
 # Not particularly relevant if you only have one project.
-project_id = "flash-audit"
+project_id = "novaguard"
 
 [api]
 enabled = true

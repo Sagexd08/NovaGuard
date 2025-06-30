@@ -22,14 +22,18 @@ const projectsHandler = require('./projects');
 const healthHandler = require('./health');
 const vulnerabilityScanHandler = require('./v1/vulnerability/scan');
 const deploymentHandler = require('./deployment/deploy');
+const estimateGasHandler = require('./deployment/estimate-gas');
 const operationLogsHandler = require('./logs/operation');
+const testAuthHandler = require('./test-auth-endpoint');
 
 // Route handlers
 app.use('/api/projects', projectsHandler);
 app.use('/api/health', healthHandler);
 app.use('/api/v1/vulnerability/scan', vulnerabilityScanHandler);
 app.use('/api/deployment/deploy', deploymentHandler);
+app.use('/api/deployment/estimate-gas', estimateGasHandler);
 app.use('/api/logs/operation', operationLogsHandler);
+app.use('/api/test-auth', testAuthHandler);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -61,11 +65,18 @@ app.get('/', (req, res) => {
   });
 });
 
+// Add request logging middleware
+app.use((req, res, next) => {
+  console.log(`📨 ${req.method} ${req.url} - ${new Date().toISOString()}`);
+  next();
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 API Server running on http://localhost:${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
   console.log(`📁 Projects endpoint: http://localhost:${PORT}/api/projects`);
+  console.log(`🔧 Enhanced logging enabled`);
 });
 
 module.exports = app;
