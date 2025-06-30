@@ -1,6 +1,6 @@
-# NovaGuard Deployment Guide
+# Flash Audit Deployment Guide
 
-This guide covers deploying NovaGuard to various web platforms without Docker.
+This guide covers deploying Flash Audit using the **Vercel + Supabase** stack (recommended) and alternative deployment options.
 
 ## 🚀 Quick Start
 
@@ -14,79 +14,56 @@ This guide covers deploying NovaGuard to various web platforms without Docker.
 
 Create `.env` files in both frontend and backend directories:
 
-#### Backend `.env`
+#### Vercel Environment Variables
 ```bash
-NODE_ENV=production
-PORT=3001
-DATABASE_URL=postgresql://username:password@host:port/database
-REDIS_URL=redis://host:port
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
+# Supabase Configuration
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+
+# Authentication
+CLERK_SECRET_KEY=your-clerk-secret-key
+VITE_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
+
+# AI Services (Optional)
+OPENROUTER_API_KEY=your-openrouter-api-key
 OPENAI_API_KEY=your-openai-api-key
 ANTHROPIC_API_KEY=your-anthropic-api-key
-GOOGLE_API_KEY=your-google-api-key
-CORS_ORIGIN=https://your-frontend-domain.com
-LOG_LEVEL=info
+
+# Security
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+NODE_ENV=production
 ```
 
-#### Frontend `.env.local`
+#### Frontend `.env` (for local development)
 ```bash
-NEXT_PUBLIC_API_URL=https://your-backend-domain.com
-NEXT_PUBLIC_WS_URL=wss://your-backend-domain.com
-NEXT_PUBLIC_APP_NAME=NovaGuard
-NEXT_PUBLIC_APP_VERSION=1.0.0
+VITE_API_BASE_URL=/api
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
+VITE_APP_NAME=NovaGuard
+VITE_APP_VERSION=1.0.0
 ```
 
 ## 🌐 Platform-Specific Deployments
 
-### 1. Vercel (Frontend) + Railway (Backend)
+### 1. Vercel + Supabase (Recommended)
 
-#### Frontend on Vercel
+#### Full-Stack Deployment on Vercel
 1. Connect your GitHub repository to Vercel
-2. Set build command: `npm run build`
-3. Set output directory: `.next`
-4. Add environment variables in Vercel dashboard
-5. Deploy
-
-#### Backend on Railway
-1. Connect your GitHub repository to Railway
-2. Select the `backend` folder as root directory
-3. Set start command: `npm start`
-4. Add environment variables in Railway dashboard
-5. Add PostgreSQL and Redis services
+2. Set root directory to project root (not frontend)
+3. Set build command: `npm run build`
+4. Set output directory: `frontend/dist`
+5. Add environment variables in Vercel dashboard
 6. Deploy
 
-### 2. Netlify (Frontend) + Heroku (Backend)
+#### Database on Supabase
+1. Create a new Supabase project
+2. Set up database schema using provided migrations
+3. Configure authentication and RLS policies
+4. Add Supabase credentials to Vercel environment variables
 
-#### Frontend on Netlify
-1. Connect GitHub repository
-2. Set build command: `npm run build`
-3. Set publish directory: `.next`
-4. Add environment variables
-5. Deploy
-
-#### Backend on Heroku
-1. Create new Heroku app
-2. Add PostgreSQL and Redis add-ons
-3. Set environment variables
-4. Connect GitHub repository
-5. Enable automatic deploys
-
-### 3. AWS (Full Stack)
-
-#### Frontend on AWS Amplify
-1. Connect GitHub repository
-2. Configure build settings
-3. Add environment variables
-4. Deploy
-
-#### Backend on AWS Elastic Beanstalk
-1. Create new application
-2. Upload source code
-3. Configure environment variables
-4. Add RDS (PostgreSQL) and ElastiCache (Redis)
-5. Deploy
-
-### 4. Google Cloud Platform
+### 2. Alternative: Firebase + Supabase
 
 #### Frontend on Firebase Hosting
 1. Install Firebase CLI
@@ -94,11 +71,10 @@ NEXT_PUBLIC_APP_VERSION=1.0.0
 3. Build project: `npm run build`
 4. Deploy: `firebase deploy`
 
-#### Backend on Cloud Run
-1. Build container image
-2. Push to Container Registry
-3. Deploy to Cloud Run
-4. Add Cloud SQL (PostgreSQL) and Memorystore (Redis)
+#### Backend as Firebase Functions
+1. Set up Firebase Functions
+2. Deploy API endpoints as cloud functions
+3. Use Supabase for database and authentication
 
 ## 🔧 Local Development Setup
 
@@ -142,45 +118,45 @@ redis-server
 
 Create `.env` files as described above with local values:
 
-#### Backend `.env`
+#### API `.env` (for local development)
 ```bash
 NODE_ENV=development
-PORT=3001
-DATABASE_URL=postgresql://novaguard:novaguard_password@localhost:5432/novaguard
-REDIS_URL=redis://localhost:6379
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+CLERK_SECRET_KEY=your-clerk-secret-key
+OPENROUTER_API_KEY=your-openrouter-api-key
 JWT_SECRET=local-development-secret
-CORS_ORIGIN=http://localhost:3000
-LOG_LEVEL=debug
 ```
 
-#### Frontend `.env.local`
+#### Frontend `.env`
 ```bash
-NEXT_PUBLIC_API_URL=http://localhost:3001
-NEXT_PUBLIC_WS_URL=ws://localhost:3001
-NEXT_PUBLIC_APP_NAME=NovaGuard
-NEXT_PUBLIC_APP_VERSION=1.0.0
+VITE_API_BASE_URL=/api
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
+VITE_APP_NAME=NovaGuard
+VITE_APP_VERSION=1.0.0
 ```
 
-### 5. Start Development Servers
+### 5. Start Development Server
 
-#### Backend
+#### Full-Stack Development
 ```bash
-cd backend
+# Install dependencies
+npm install
+
+# Start development server (frontend + API)
 npm run dev
 ```
 
-#### Frontend
-```bash
-cd frontend
-npm run dev
-```
-
-Visit `http://localhost:3000` to access the application.
+Visit `http://localhost:5174` to access the application.
+API endpoints are available at `http://localhost:5174/api`
 
 ## 📊 Database Setup
 
-### PostgreSQL Schema
-The application will automatically create necessary tables on first run. For manual setup:
+### Supabase Database
+The application uses Supabase for database and authentication. Set up your database schema using the provided migrations in the `supabase/migrations` folder.
 
 ```sql
 -- Users table
