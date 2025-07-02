@@ -2,12 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist",
-        "buildCommand": "npm run build"
-      }
+      "src": "frontend/dist/**",
+      "use": "@vercel/static"
     },
     {
       "src": "api/**/*.js",
@@ -58,6 +54,14 @@
     "OPENROUTER_API_KEY_KIMI": "@openrouter_api_key_kimi",
     "OPENROUTER_API_KEY_GEMMA": "@openrouter_api_key_gemma",
     "JWT_SECRET": "@jwt_secret",
+    "ETHERSCAN_API_KEY": "@etherscan_api_key",
+    "POLYGONSCAN_API_KEY": "@polygonscan_api_key",
+    "ARBISCAN_API_KEY": "@arbiscan_api_key",
+    "OPTIMISTIC_ETHERSCAN_API_KEY": "@optimistic_etherscan_api_key",
+    "BASESCAN_API_KEY": "@basescan_api_key",
+    "BSCSCAN_API_KEY": "@bscscan_api_key",
+    "SNOWTRACE_API_KEY": "@snowtrace_api_key",
+    "STARKNET_API_KEY": "@starknet_api_key",
     "NODE_ENV": "production"
   },
   "functions": {
