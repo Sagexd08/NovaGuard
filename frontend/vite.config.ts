@@ -1,15 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5174,
-    open: '/landing.html', // Open landing page by default
+    port: 3000,
+    open: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3002',
+        target: 'http://localhost:3001',
         changeOrigin: true,
         secure: false
       }
@@ -18,8 +19,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: 'index.html', // Main entry point
-        landing: 'landing.html' // Landing page
+        main: 'index.html'
       }
     },
     outDir: 'dist',
@@ -29,7 +29,25 @@ export default defineConfig({
     emptyOutDir: true
   },
   publicDir: 'public',
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      url: 'url',
+      zlib: 'browserify-zlib',
+      http: 'stream-http',
+      https: 'https-browserify',
+      assert: 'assert',
+      os: 'os-browserify',
+      path: 'path-browserify'
+    }
+  },
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    global: 'globalThis'
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom']
   }
 })
