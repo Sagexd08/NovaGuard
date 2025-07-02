@@ -2,6 +2,8 @@
 const { withAuth } = require('../middleware/auth');
 const { createClient } = require('@supabase/supabase-js');
 const axios = require('axios');
+const EtherscanV2Service = require('../services/etherscan-v2');
+const StarknetService = require('../services/starknet-service');
 
 // Initialize Supabase client
 const supabaseUrl = process.env.SUPABASE_URL;
@@ -28,6 +30,8 @@ const setCorsHeaders = (res) => {
 // Contract Controller Class (from backend)
 class ContractController {
   constructor() {
+    this.etherscanService = new EtherscanV2Service();
+    this.starknetService = new StarknetService();
     this.supportedChains = {
       ethereum: {
         name: 'Ethereum Mainnet',
@@ -58,6 +62,28 @@ class ContractController {
         name: 'Base',
         explorerApiUrl: 'https://api.basescan.org/api',
         apiKey: process.env.BASESCAN_API_KEY || 'demo'
+      },
+      avalanche: {
+        name: 'Avalanche C-Chain',
+        explorerApiUrl: 'https://api.snowtrace.io/api',
+        apiKey: process.env.SNOWTRACE_API_KEY || 'demo'
+      },
+      fuji: {
+        name: 'Avalanche Fuji Testnet',
+        explorerApiUrl: 'https://api-testnet.snowtrace.io/api',
+        apiKey: process.env.SNOWTRACE_API_KEY || 'demo'
+      },
+      starknet: {
+        name: 'Starknet Mainnet',
+        rpcUrl: 'https://alpha-mainnet.starknet.io',
+        explorerUrl: 'https://starkscan.co',
+        type: 'starknet'
+      },
+      starknet_goerli: {
+        name: 'Starknet Goerli',
+        rpcUrl: 'https://alpha4.starknet.io',
+        explorerUrl: 'https://testnet.starkscan.co',
+        type: 'starknet'
       }
     };
   }
@@ -366,6 +392,29 @@ class ContractController {
         error: error.message,
         statistics: {}
       };
+    }
+  }
+
+  // Enhanced contract analysis using Etherscan v2 API
+  async getEnhancedContractAnalysis(contractAddress, chain = 'ethereum') {
+    try {
+      console.log(`🔍 Starting enhanced analysis for ${contractAddress} on ${chain}`);
+
+      // Use the new Etherscan v2 service for comprehensive analysis
+      const analysis = await this.etherscanService.getContractAnalysis(contractAddress, chain);
+
+      // Add additional metadata
+      analysis.enhancedFeatures = {
+        multiChainSupport: true,
+        v2ApiEnabled: true,
+        comprehensiveMetadata: true,
+        supportedChains: this.etherscanService.getSupportedChains()
+      };
+
+      return analysis;
+    } catch (error) {
+      console.error(`❌ Enhanced analysis failed: ${error.message}`);
+      throw error;
     }
   }
 }

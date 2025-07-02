@@ -3,15 +3,28 @@
   "version": "1.0.0",
   "description": "Flash Audit API serverless functions for Vercel",
   "main": "index.js",
+  "scripts": {
+    "dev": "node enhanced-server.js",
+    "dev:basic": "node index.js",
+    "start": "node enhanced-server.js",
+    "start:basic": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "health": "curl http://localhost:3001/health",
+    "docs": "curl http://localhost:3001/api/docs"
+  },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.14",
     "@solidity-parser/parser": "^0.18.0",
     "@supabase/supabase-js": "^2.50.2",
     "axios": "^1.6.2",
+    "compression": "^1.8.0",
     "cors": "^2.8.5",
     "dotenv": "^17.0.0",
     "ethers": "^6.13.4",
     "express": "^4.18.2",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^7.2.0",
+    "morgan": "^1.10.0",
     "node-fetch": "^3.3.2",
     "solc": "^0.8.26"
   },

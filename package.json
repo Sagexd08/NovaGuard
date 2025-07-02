@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "Production-grade Web3 smart contract auditing IDE with AI-powered analysis and real-time collaboration",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "api"
-  ],
+
   "scripts": {
     "install:all": "npm install && npm run install:frontend && npm run install:api",
     "install:frontend": "cd frontend && npm install",

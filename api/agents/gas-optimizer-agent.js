@@ -309,7 +309,8 @@ RESPOND ONLY WITH VALID JSON:
 
     functionMatches.forEach((func, index) => {
       // Check for public vs external
-      if (func.includes('public') && !contractCode.includes(`this.${func.match(/function\s+(\w+)/)[1]}`)) {
+      const funcMatch = func.match(/function\s+(\w+)/);
+      if (func.includes('public') && funcMatch && !contractCode.includes('this.' + funcMatch[1])) {
         optimizations.push({
           type: 'function_visibility',
           severity: 'low',
@@ -349,7 +350,7 @@ RESPOND ONLY WITH VALID JSON:
 
     eventMatches.forEach((event, index) => {
       const topicCount = (event.match(/,/g) || []).length + 1;
-      estimates.totalCost += this.gasCosts[`LOG${Math.min(topicCount, 4)}`];
+      estimates.totalCost += this.gasCosts['LOG' + Math.min(topicCount, 4)];
 
       // Check for excessive topics
       if (topicCount > 3) {
@@ -370,7 +371,7 @@ RESPOND ONLY WITH VALID JSON:
   // Extract function body for analysis
   extractFunctionBody(contractCode, functionSignature) {
     const funcName = functionSignature.match(/function\s+(\w+)/)[1];
-    const regex = new RegExp(`function\\s+${funcName}[^{]*\\{([^{}]*(?:\\{[^{}]*\\}[^{}]*)*)\\}`, 'gi');
+    const regex = new RegExp('function\\s+' + funcName + '[^{]*\\{([^{}]*(?:\\{[^{}]*\\}[^{}]*)*)\\}', 'gi');
     const match = contractCode.match(regex);
     return match ? match[0] : '';
   }
