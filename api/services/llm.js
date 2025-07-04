@@ -28,10 +28,21 @@ const setCorsHeaders = (res) => {
 // LLM Service Class (migrated from backend)
 class LLMService {
   constructor() {
-    this.apiKey = process.env.OPENROUTER_API_KEY;
-    this.baseURL = process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1';
-    this.model = process.env.LLM_MODEL || 'google/gemma-2-9b-it:free';
-    this.kimiModel = process.env.KIMI_MODEL || 'moonshotai/kimi-dev-72b:free';
+    // Updated API keys and models
+    this.mistralApiKey = process.env.OPENROUTER_API_KEY_MISTRAL || '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';
+    this.gemmaApiKey = process.env.OPENROUTER_API_KEY_GEMMA || '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';
+    this.geminiApiKey = process.env.GEMINI_API_KEY || 'AIzaSyD89JPbu6477uDH6zCNcfKB66UodaE9el4';
+
+    this.openRouterBaseURL = 'https://openrouter.ai/api/v1';
+    this.geminiBaseURL = 'https://generativelanguage.googleapis.com/v1beta';
+
+    // Available models
+    this.models = {
+      mistral: 'mistralai/mistral-small-3.2-24b-instruct:free',
+      gemma: 'google/gemma-3n-e4b-it:free',
+      gemini: 'gemini-2.5-pro'
+    };
+
     this.timeout = 60000; // 60 seconds
   }
 
@@ -129,15 +140,41 @@ Be thorough but concise. Provide actionable recommendations.
     `;
   }
 
-  // Call LLM API with enhanced error handling (from backend)
-  async callLLM(prompt, model = null) {
+  // Call LLM API with enhanced error handling and multi-model support
+  async callLLM(prompt, modelType = 'mistral') {
     try {
-      const selectedModel = model || this.model;
-      
+      // Determine which model and API to use
+      let apiKey, baseURL, model;
+
+      switch (modelType) {
+        case 'gemma':
+          apiKey = this.gemmaApiKey;
+          baseURL = this.openRouterBaseURL;
+          model = this.models.gemma;
+          break;
+        case 'gemini':
+          apiKey = this.geminiApiKey;
+          baseURL = this.geminiBaseURL;
+          model = this.models.gemini;
+          break;
+        case 'mistral':
+        default:
+          apiKey = this.mistralApiKey;
+          baseURL = this.openRouterBaseURL;
+          model = this.models.mistral;
+          break;
+      }
+
+      // Handle Gemini API differently
+      if (modelType === 'gemini') {
+        return await this.callGeminiAPI(prompt, apiKey, model);
+      }
+
+      // OpenRouter API call for Mistral and Gemma
       const response = await axios.post(
-        `${this.baseURL}/chat/completions`,
+        `${baseURL}/chat/completions`,
         {
-          model: selectedModel,
+          model: model,
           messages: [
             {
               role: 'system',
@@ -154,10 +191,10 @@ Be thorough but concise. Provide actionable recommendations.
         },
         {
           headers: {
-            'Authorization': `Bearer ${this.apiKey}`,
+            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://flash-audit.vercel.app',
-            'X-Title': 'Flash Audit - Smart Contract Security Auditor',
+            'HTTP-Referer': 'https://novaguard.vercel.app',
+            'X-Title': 'NovaGuard - Smart Contract Security Auditor',
           },
           timeout: this.timeout,
         }
@@ -170,16 +207,54 @@ Be thorough but concise. Provide actionable recommendations.
       return response.data.choices[0].message.content;
 
     } catch (error) {
-      if (error.response) {
-        console.error('LLM API error:', error.response.status, error.response.data);
-        throw new Error(`LLM API error: ${error.response.status} - ${error.response.data?.error?.message || 'Unknown error'}`);
-      } else if (error.request) {
-        console.error('LLM API network error:', error.message);
-        throw new Error('Network error connecting to LLM API');
-      } else {
-        console.error('LLM API request error:', error.message);
-        throw new Error(`LLM API request error: ${error.message}`);
+      console.error(`${modelType} API error:`, error.message);
+
+      // Try fallback model if primary fails
+      if (modelType === 'mistral') {
+        console.log('Mistral failed, trying Gemma...');
+        return await this.callLLM(prompt, 'gemma');
+      } else if (modelType === 'gemma') {
+        console.log('Gemma failed, trying Gemini...');
+        return await this.callLLM(prompt, 'gemini');
       }
+
+      throw new Error(`All LLM models failed: ${error.message}`);
+    }
+  }
+
+  // Gemini API specific handler
+  async callGeminiAPI(prompt, apiKey, model) {
+    try {
+      const response = await axios.post(
+        `${this.geminiBaseURL}/models/${model}:generateContent?key=${apiKey}`,
+        {
+          contents: [{
+            parts: [{
+              text: `You are a professional smart contract security auditor. ${prompt}`
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.1,
+            topP: 0.9,
+            maxOutputTokens: 4000,
+          }
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: this.timeout,
+        }
+      );
+
+      if (!response.data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+        throw new Error('Invalid response from Gemini API');
+      }
+
+      return response.data.candidates[0].content.parts[0].text;
+
+    } catch (error) {
+      throw new Error(`Gemini API error: ${error.message}`);
     }
   }
 
@@ -264,23 +339,24 @@ Be thorough but concise. Provide actionable recommendations.
     }
   }
 
-  // Analyze contract with dual LLM strategy (from backend)
+  // Analyze contract with multi-model strategy
   async analyzeContract(contractCode, contractInfo = {}) {
     try {
-      console.log('Starting LLM contract analysis', { 
-        model: this.model,
-        codeLength: contractCode.length 
+      console.log('Starting LLM contract analysis', {
+        models: Object.keys(this.models),
+        codeLength: contractCode.length
       });
 
       const prompt = this.buildSecurityAnalysisPrompt(contractCode, contractInfo);
-      
-      // Use primary model for analysis
-      const response = await this.callLLM(prompt);
+
+      // Use Mistral as primary model (most capable for security analysis)
+      const response = await this.callLLM(prompt, 'mistral');
       const analysis = this.parseAnalysisResponse(response);
-      
-      console.log('LLM analysis completed', { 
+
+      console.log('LLM analysis completed', {
         vulnerabilitiesFound: analysis.vulnerabilities?.length || 0,
-        overallScore: analysis.overallScore 
+        overallScore: analysis.overallScore,
+        modelUsed: 'mistral'
       });
 
       return analysis;
@@ -291,13 +367,20 @@ Be thorough but concise. Provide actionable recommendations.
     }
   }
 
-  // Get model information (from backend)
+  // Get model information
   getModelInfo() {
     return {
-      configured: !!this.apiKey,
-      model: this.model,
-      kimiModel: this.kimiModel,
-      baseURL: this.baseURL,
+      configured: !!(this.mistralApiKey && this.gemmaApiKey && this.geminiApiKey),
+      models: this.models,
+      apiKeys: {
+        mistral: !!this.mistralApiKey,
+        gemma: !!this.gemmaApiKey,
+        gemini: !!this.geminiApiKey
+      },
+      baseURLs: {
+        openRouter: this.openRouterBaseURL,
+        gemini: this.geminiBaseURL
+      },
       timeout: this.timeout
     };
   }
