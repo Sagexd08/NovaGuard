@@ -23,9 +23,8 @@
     "strict": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "types": []
   },
   "include": ["src", "home-script.js"]
 }

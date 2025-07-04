@@ -1,72 +1,78 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 
 const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLaunchApp = () => {
+    navigate('/app');
+  };
+
+  const handleStartAuditing = () => {
+    navigate('/app');
+  };
 
   useEffect(() => {
     // Smooth scrolling for anchor links
-    const handleAnchorClick = (e: Event) => {
-      const target = e.target as HTMLAnchorElement;
-      if (target.getAttribute('href')?.startsWith('#')) {
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    anchors.forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const targetElement = document.querySelector(target.getAttribute('href')!);
-        if (targetElement) {
-          targetElement.scrollIntoView({
+        const target = document.querySelector(this.getAttribute('href') || '');
+        if (target) {
+          target.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
           });
         }
-      }
-    };
+      });
+    });
 
-    // Add interactive effects to feature cards
-    const addCardEffects = () => {
-      document.querySelectorAll('.feature-card').forEach(card => {
+    // Add interactive effects
+    const cards = document.querySelectorAll('.feature-card');
+    cards.forEach(card => {
+      const cardElement = card as HTMLElement;
+      cardElement.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px) scale(1.02)';
+      });
+      
+      cardElement.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // API Health Check
+    fetch('/api/health')
+      .then(response => response.json())
+      .then(data => {
+        console.log('API Health:', data);
+      })
+      .catch(error => {
+        console.warn('API Health check failed:', error);
+      });
+
+    // Cleanup
+    return () => {
+      anchors.forEach(anchor => {
+        anchor.removeEventListener('click', () => {});
+      });
+      cards.forEach(card => {
         const cardElement = card as HTMLElement;
-        
-        const handleMouseEnter = () => {
-          cardElement.style.transform = 'translateY(-10px) scale(1.02)';
-        };
-        
-        const handleMouseLeave = () => {
-          cardElement.style.transform = 'translateY(0) scale(1)';
-        };
-
-        cardElement.addEventListener('mouseenter', handleMouseEnter);
-        cardElement.addEventListener('mouseleave', handleMouseLeave);
-
-        // Cleanup function
-        return () => {
-          cardElement.removeEventListener('mouseenter', handleMouseEnter);
-          cardElement.removeEventListener('mouseleave', handleMouseLeave);
-        };
+        cardElement.removeEventListener('mouseenter', () => {});
+        cardElement.removeEventListener('mouseleave', () => {});
       });
     };
-
-    document.addEventListener('click', handleAnchorClick);
-    addCardEffects();
-
-    return () => {
-      document.removeEventListener('click', handleAnchorClick);
-    };
   }, []);
-
-  const handleLaunchApp = () => {
-    window.location.href = '/app';
-  };
-
-  const handleStartAuditing = () => {
-    window.location.href = '/app';
-  };
 
   return (
     <div className="landing-page">
       <div className="container">
         <nav>
-          <div className="logo">⚡ NovaGuard</div>
+          <div className="logo">⚡ Flash Audit</div>
           <div className="nav-links">
             <a href="#features">Features</a>
-            <a href="#stats">About</a>
+            <a href="#about">About</a>
             <a href="#contact">Contact</a>
             <button onClick={handleLaunchApp} className="cta-button">Launch App</button>
           </div>
@@ -84,10 +90,8 @@ const LandingPage: React.FC = () => {
 
       <section className="features" id="features">
         <div className="container">
-          <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '20px' }}>Powerful Features</h2>
-          <p style={{ textAlign: 'center', fontSize: '1.2rem', opacity: 0.9, maxWidth: '600px', margin: '0 auto' }}>
-            Everything you need to secure your smart contracts and deploy with confidence.
-          </p>
+          <h2 style={{textAlign: 'center', fontSize: '2.5rem', marginBottom: '20px'}}>Powerful Features</h2>
+          <p style={{textAlign: 'center', fontSize: '1.2rem', opacity: 0.9, maxWidth: '600px', margin: '0 auto'}}>Everything you need to secure your smart contracts and deploy with confidence.</p>
           
           <div className="features-grid">
             <div className="feature-card">
@@ -108,7 +112,7 @@ const LandingPage: React.FC = () => {
             <div className="feature-card">
               <i className="ri-global-line feature-icon"></i>
               <h3>Multi-chain Support</h3>
-              <p>Support for Ethereum, Polygon, Arbitrum, Solana, Starknet, Avalanche, and more blockchain networks.</p>
+              <p>Support for Ethereum, Polygon, BSC, Arbitrum, Optimism, Base, and more blockchain networks.</p>
             </div>
             <div className="feature-card">
               <i className="ri-bar-chart-line feature-icon"></i>
@@ -124,10 +128,10 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="stats" id="stats">
+      <section className="stats">
         <div className="container">
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Trusted by Developers</h2>
-          <p style={{ fontSize: '1.2rem', opacity: 0.9 }}>Join thousands of developers securing their smart contracts with NovaGuard.</p>
+          <h2 style={{fontSize: '2.5rem', marginBottom: '20px'}}>Trusted by Developers</h2>
+          <p style={{fontSize: '1.2rem', opacity: 0.9}}>Join thousands of developers securing their smart contracts with Flash Audit.</p>
           
           <div className="stats-grid">
             <div className="stat-item">
@@ -153,13 +157,14 @@ const LandingPage: React.FC = () => {
       <footer id="contact">
         <div className="container">
           <div className="footer-content">
-            <div className="logo">⚡ NovaGuard</div>
+            <div className="logo">⚡ Flash Audit</div>
             <div className="footer-links">
               <button onClick={handleLaunchApp}>App</button>
+              <a href="/api/docs">API Docs</a>
               <a href="https://github.com/Sagexd08/NovaGuard">GitHub</a>
-              <a href="mailto:contact@novaguard.dev">Contact</a>
+              <a href="#contact">Contact</a>
             </div>
-            <p style={{ opacity: 0.8 }}>&copy; 2024 NovaGuard. All rights reserved.</p>
+            <p style={{opacity: 0.8}}>&copy; 2024 Flash Audit. All rights reserved.</p>
           </div>
         </div>
       </footer>

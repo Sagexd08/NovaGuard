@@ -74,12 +74,9 @@ jobs:
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
           # AI/LLM API Keys
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENROUTER_API_KEY_KIMI: ${{ secrets.OPENROUTER_API_KEY_KIMI }}
-          OPENROUTER_API_KEY_GEMMA: ${{ secrets.OPENROUTER_API_KEY_GEMMA }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          OPENROUTER_API_KEY_MISTRAL: "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"
+          OPENROUTER_API_KEY_GEMMA: "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"
+          GEMINI_API_KEY: "AIzaSyD89JPbu6477uDH6zCNcfKB66UodaE9el4"
           # Security
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           # Blockchain API Keys
@@ -253,7 +250,9 @@ jobs:
           # WalletConnect
           VITE_WALLETCONNECT_PROJECT_ID: "cc60126d352dc8388cdd05810fb003a3"
           # AI/LLM Configuration
-          VITE_OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          VITE_OPENROUTER_API_KEY_MISTRAL: "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"
+          VITE_OPENROUTER_API_KEY_GEMMA: "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"
+          VITE_GEMINI_API_KEY: "AIzaSyD89JPbu6477uDH6zCNcfKB66UodaE9el4"
           # Alchemy
           VITE_ALCHEMY_API_KEY: "1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
           # Liveblocks (Real-time Collaboration)

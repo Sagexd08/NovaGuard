@@ -59,15 +59,12 @@
     "CLERK_SECRET_KEY": "@clerk_secret_key",
     "VITE_CLERK_PUBLISHABLE_KEY": "@vite_clerk_publishable_key",
 
-    "OPENROUTER_API_KEY": "@openrouter_api_key",
-    "OPENROUTER_API_KEY_KIMI": "@openrouter_api_key_kimi",
-    "OPENROUTER_API_KEY_GEMMA": "@openrouter_api_key_gemma",
-    "OPENAI_API_KEY": "@openai_api_key",
-    "VITE_OPENAI_API_KEY": "@vite_openai_api_key",
-    "ANTHROPIC_API_KEY": "@anthropic_api_key",
-    "VITE_ANTHROPIC_API_KEY": "@vite_anthropic_api_key",
-    "GOOGLE_API_KEY": "@google_api_key",
-    "VITE_GOOGLE_API_KEY": "@vite_google_api_key",
+    "OPENROUTER_API_KEY_MISTRAL": "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",
+    "VITE_OPENROUTER_API_KEY_MISTRAL": "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",
+    "OPENROUTER_API_KEY_GEMMA": "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",
+    "VITE_OPENROUTER_API_KEY_GEMMA": "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",
+    "GEMINI_API_KEY": "AIzaSyD89JPbu6477uDH6zCNcfKB66UodaE9el4",
+    "VITE_GEMINI_API_KEY": "AIzaSyD89JPbu6477uDH6zCNcfKB66UodaE9el4",
 
     "JWT_SECRET": "@jwt_secret",
 
