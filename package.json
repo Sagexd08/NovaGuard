@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Production-grade Web3 smart contract auditing IDE with AI-powered analysis and real-time collaboration",
   "private": true,
-
   "scripts": {
     "install:all": "npm install && npm run install:frontend && npm run install:api",
     "install:frontend": "cd frontend && npm install",
@@ -44,7 +43,7 @@
     "prettier": "^3.1.1"
   },
   "engines": {
-    "node": ">=16.0.0",
+    "node": "18.x",
     "npm": ">=8.0.0"
   },
   "repository": {
@@ -75,8 +74,16 @@
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.23",
+    "@reown/appkit": "^1.7.12",
+    "@reown/appkit-adapter-wagmi": "^1.7.12",
+    "@supabase/supabase-js": "^2.50.2",
+    "@tanstack/react-query": "^5.81.5",
     "cors": "^2.8.5",
     "dotenv": "^17.0.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2",
+    "pg": "^8.16.3",
+    "viem": "^2.31.7",
+    "wagmi": "^2.15.6"
   }
 }

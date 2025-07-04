@@ -49,6 +49,8 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@sentry/nextjs": "^8.42.0",
+    "@sentry/react": "^8.42.0",
     "@solidity-parser/parser": "^0.20.1",
     "@stripe/stripe-js": "^2.4.0",
     "@supabase/supabase-js": "^2.50.2",
@@ -90,7 +92,7 @@
     "@near-wallet-selector/core": "^8.9.1",
     "@near-wallet-selector/modal-ui": "^8.9.1",
     "@near-wallet-selector/near-wallet": "^8.9.1",
-    "near-api-js": "^2.1.4",
+    "near-api-js": "^4.0.3",
     "@cosmjs/stargate": "^0.32.2",
     "@cosmjs/cosmwasm-stargate": "^0.32.2",
     "@polkadot/api": "^10.11.2",
@@ -99,8 +101,8 @@
     "@taquito/taquito": "^19.2.0",
     "@onflow/fcl": "^1.8.1",
     "@onflow/types": "^1.2.2",
-    "cardano-serialization-lib-browser": "^12.0.1",
-    "lucid-cardano": "^0.10.7",
+    "@emurgo/cardano-serialization-lib-browser": "^12.0.1",
+    "lucid-cardano": "^0.10.11",
     "crypto-browserify": "^3.12.0",
     "stream-browserify": "^3.0.0",
     "url": "^0.11.3",
@@ -135,7 +137,7 @@
     "typescript": "^5.3.3"
   },
   "engines": {
-    "node": ">=18.0.0",
+    "node": "18.x",
     "npm": ">=8.0.0"
   }
 }

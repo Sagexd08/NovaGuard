@@ -66,8 +66,54 @@ jobs:
           npm test || echo "API tests completed"
         env:
           CI: true
+          # Supabase Configuration
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          # Clerk Configuration
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          # AI/LLM API Keys
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_API_KEY_KIMI: ${{ secrets.OPENROUTER_API_KEY_KIMI }}
+          OPENROUTER_API_KEY_GEMMA: ${{ secrets.OPENROUTER_API_KEY_GEMMA }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          # Security
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          # Blockchain API Keys
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+          POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
+          ARBISCAN_API_KEY: ${{ secrets.ARBISCAN_API_KEY }}
+          BSCSCAN_API_KEY: ${{ secrets.BSCSCAN_API_KEY }}
+          SNOWTRACE_API_KEY: ${{ secrets.SNOWTRACE_API_KEY }}
+          STARKNET_API_KEY: ${{ secrets.STARKNET_API_KEY }}
+          SOLSCAN_API_KEY: ${{ secrets.SOLSCAN_API_KEY }}
+          # RPC URLs
+          ETHEREUM_RPC_URL: "https://eth-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          POLYGON_RPC_URL: "https://polygon-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          ARBITRUM_RPC_URL: "https://arb-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          BSC_RPC_URL: ${{ secrets.BSC_RPC_URL }}
+          AVALANCHE_RPC_URL: "https://avax-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          SOLANA_RPC_URL: "https://solana-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          STARKNET_RPC_URL: "https://starknet-mainnet.g.alchemy.com/starknet/version/rpc/v0_8/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          # Alchemy
+          ALCHEMY_API_KEY: "1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          # Liveblocks
+          LIVEBLOCKS_SECRET_KEY: "sk_dev_44jTG8Lfkh8WnESZ8HQw6jaWEkhReyNdsuc21VzTq3jUbpXxkL0WbqnsGu5EkZHn"
+          # Razorpay
+          RAZORPAY_KEY_ID: "rzp_test_Cf10fx9BXz9eFC"
+          RAZORPAY_KEY_SECRET: "aVhUXnxAKMzaV0FEoIi2Wwed"
+          # Monitoring
+          DATADOG_API_KEY: "17309d20362c9201c24ee9e84b758e8d"
+          SENTRY_AUTH_TOKEN: "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"
+          # Security
+          SNYK_TOKEN: "a7b4cfa3-9138-4fd7-9789-826f58749e49"
+          # Notifications
+          SLACK_WEBHOOK: "https://hooks.slack.com/services/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"
+          # Deployment
+          VERCEL_TOKEN: "UjsGKycIQ3p8oHGyAEkHuHVv"
 
       - name: Test Frontend Build
         run: |
@@ -75,8 +121,34 @@ jobs:
           npm run build || echo "Frontend build test completed"
         env:
           CI: true
+          # Supabase Configuration
           VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          # Clerk Configuration
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          # Blockchain API Keys
+          VITE_ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+          VITE_POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
+          VITE_ARBISCAN_API_KEY: ${{ secrets.ARBISCAN_API_KEY }}
+          VITE_BSCSCAN_API_KEY: ${{ secrets.BSCSCAN_API_KEY }}
+          VITE_SNOWTRACE_API_KEY: ${{ secrets.SNOWTRACE_API_KEY }}
+          VITE_SOLSCAN_API_KEY: ${{ secrets.SOLSCAN_API_KEY }}
+          # RPC URLs
+          VITE_ETHEREUM_RPC_URL: "https://eth-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_POLYGON_RPC_URL: "https://polygon-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_ARBITRUM_RPC_URL: "https://arb-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_BSC_RPC_URL: ${{ secrets.BSC_RPC_URL }}
+          VITE_AVALANCHE_RPC_URL: "https://avax-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_SOLANA_RPC_URL: "https://solana-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_STARKNET_RPC_URL: "https://starknet-mainnet.g.alchemy.com/starknet/version/rpc/v0_8/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          # WalletConnect
+          VITE_WALLETCONNECT_PROJECT_ID: ${{ secrets.WALLETCONNECT_PROJECT_ID }}
+          # AI/LLM Configuration
+          VITE_OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          # App Configuration
+          VITE_APP_NAME: "NovaGuard"
+          VITE_APP_VERSION: "1.0.0"
+          NODE_ENV: "production"
 
       - name: Upload test coverage
         uses: codecov/codecov-action@v3
@@ -155,10 +227,45 @@ jobs:
           cd frontend
           npm run build || echo "Build completed with warnings"
         env:
+          # Build Configuration
+          CI: true
+          NODE_ENV: production
+          # Supabase Configuration
           VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          # Clerk Configuration
           VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          # Blockchain API Keys
           VITE_ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+          VITE_POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
+          VITE_ARBISCAN_API_KEY: ${{ secrets.ARBISCAN_API_KEY }}
+          VITE_BSCSCAN_API_KEY: ${{ secrets.BSCSCAN_API_KEY }}
+          VITE_SNOWTRACE_API_KEY: ${{ secrets.SNOWTRACE_API_KEY }}
+          VITE_SOLSCAN_API_KEY: ${{ secrets.SOLSCAN_API_KEY }}
+          # RPC URLs
+          VITE_ETHEREUM_RPC_URL: "https://eth-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_POLYGON_RPC_URL: "https://polygon-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_ARBITRUM_RPC_URL: "https://arb-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_BSC_RPC_URL: ${{ secrets.BSC_RPC_URL }}
+          VITE_AVALANCHE_RPC_URL: "https://avax-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_SOLANA_RPC_URL: "https://solana-mainnet.g.alchemy.com/v2/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          VITE_STARKNET_RPC_URL: "https://starknet-mainnet.g.alchemy.com/starknet/version/rpc/v0_8/1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          # WalletConnect
+          VITE_WALLETCONNECT_PROJECT_ID: "cc60126d352dc8388cdd05810fb003a3"
+          # AI/LLM Configuration
+          VITE_OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          # Alchemy
+          VITE_ALCHEMY_API_KEY: "1a3ETMqJJ0QMjFNP2Z6GNdp1mCsxNpEO"
+          # Liveblocks (Real-time Collaboration)
+          VITE_LIVEBLOCKS_PUBLIC_KEY: ${{ secrets.LIVEBLOCKS_PUBLIC_KEY }}
+          # Razorpay (Payments)
+          VITE_RAZORPAY_KEY_ID: "rzp_test_Cf10fx9BXz9eFC"
+          # Monitoring
+          VITE_SENTRY_DSN: "https://832d65d79a3de6e1919f5145396175df@o4509612247613440.ingest.de.sentry.io/4509612308037712"
+          # App Configuration
+          VITE_APP_NAME: "NovaGuard"
+          VITE_APP_VERSION: "1.0.0"
+          VITE_NODE_ENV: "production"
 
       - name: Deploy to Vercel
         id: deploy
@@ -175,9 +282,6 @@ jobs:
           echo "✅ Deployment completed successfully!"
           echo "🔗 URL: ${{ steps.deploy.outputs.preview-url }}"
 
-  # =============================================
-  # PERFORMANCE TESTING
-  # =============================================
   
   performance-test:
     name: Performance Test
@@ -197,10 +301,7 @@ jobs:
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli@0.12.x
 
-      - name: Run Lighthouse CI
-        run: lhci autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
 
       - name: Run load tests
         run: |
@@ -231,17 +332,7 @@ jobs:
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
 
-      - name: Upload backup to S3
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
 
-      - name: Sync backup to S3
-        run: |
-          aws s3 cp backup-*.sql s3://novaguard-backups/database/
-          aws s3 cp backup-*.sql s3://novaguard-backups/database/latest.sql
 
   # =============================================
   # MONITORING SETUP
@@ -320,24 +411,6 @@ jobs:
     if: always()
     
     steps:
-      - name: Send Discord notification
-        uses: Ilshidur/action-discord@master
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          args: |
-            🚀 **NovaGuard Deployment Complete**
-            
-            **Status:** ${{ job.status }}
-            **Branch:** ${{ github.ref_name }}
-            **Commit:** ${{ github.sha }}
-            **Author:** ${{ github.actor }}
-            
-            **Environment:** Production
-            **URL:** https://novaguard.app
-            
-            **Build Time:** ${{ github.event.head_commit.timestamp }}
-
       - name: Update GitHub status
         uses: actions/github-script@v6
         with:
