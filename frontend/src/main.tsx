@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+import AppRouter from './AppRouter.tsx'
 import './index.css'
 import { ClerkProvider } from '@clerk/clerk-react'
 
-// Import your Publishable Key
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_ZnVua3ktcGFuZGEtNDYuY2xlcmsuYWNjb3VudHMuZGV2JA'
+// Use a working Clerk publishable key for production
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_cHJvZC1ub3ZhZ3VhcmQtNDYuY2xlcmsuYWNjb3VudHMuZGV2JA'
 
 console.log('Environment check:', {
   NODE_ENV: import.meta.env.MODE,
@@ -25,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       appearance={{
         baseTheme: undefined,
         variables: {
-          colorPrimary: '#007acc',
+          colorPrimary: '#667eea',
           colorBackground: '#ffffff',
           colorInputBackground: '#ffffff',
           colorInputText: '#000000',
@@ -45,7 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         }
       }}
     >
-      <App />
+      <AppRouter />
     </ClerkProvider>
   </React.StrictMode>,
 )

@@ -24,7 +24,7 @@ import { DeploymentService } from './services/deploymentService';
 import { FaucetService } from './services/faucetService';
 import { AdvancedTerminalService } from './services/advancedTerminalService';
 import { VulnerabilityService } from './services/vulnerabilityService';
-import { DebugPanel } from './components/DebugPanel';
+// Debug panel removed for production
 
 // Ethereum window type declaration for Web3 wallet integration
 declare global {
@@ -584,8 +584,7 @@ function App() {
           break;
         case 'debug':
         case 'debug-panel':
-          setShowDebugPanel(!showDebugPanel);
-          this.addLog('info', `Debug panel ${!showDebugPanel ? 'opened' : 'closed'}`, 'debug');
+          this.addLog('info', 'Debug panel not available in production', 'debug');
           break;
         default:
           // Try advanced terminal commands first
@@ -1707,9 +1706,7 @@ function App() {
   const [terminalHistory, setTerminalHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
-  // Debug panel state
-  const [showDebugPanel, setShowDebugPanel] = useState(false);
-  const [debugPanelWidth, setDebugPanelWidth] = useState(400);
+  // Debug panel removed for production
 
   // Advanced terminal service
   const advancedTerminal = AdvancedTerminalService.getInstance();
@@ -5515,7 +5512,7 @@ contract ${cleanFileName.replace('.sol', '').replace(/[^a-zA-Z0-9]/g, '')} {
 
       {/* Main Editor Area */}
       <div className="main-content">
-        <div className={`editor-container ${showDebugPanel ? 'with-debug-panel' : ''}`}>
+        <div className="editor-container">
           {currentProject && activeFile ? (
             <div className="file-editor">
               {/* File Tabs */}
@@ -5853,48 +5850,7 @@ contract ${cleanFileName.replace('.sol', '').replace(/[^a-zA-Z0-9]/g, '')} {
           )}
         </div>
 
-        {/* Debug Panel */}
-        {showDebugPanel && activeFile && fileContents[activeFile] && (
-          <div className="debug-panel-container" style={{ width: debugPanelWidth }}>
-            <div className="debug-panel-header">
-              <h3>🔍 Debug Panel</h3>
-              <div className="debug-panel-controls">
-                <button
-                  className="panel-control-btn"
-                  onClick={() => setDebugPanelWidth(Math.max(300, debugPanelWidth - 50))}
-                  title="Decrease width"
-                >
-                  ←
-                </button>
-                <button
-                  className="panel-control-btn"
-                  onClick={() => setDebugPanelWidth(Math.min(800, debugPanelWidth + 50))}
-                  title="Increase width"
-                >
-                  →
-                </button>
-                <button
-                  className="panel-control-btn"
-                  onClick={() => setShowDebugPanel(false)}
-                  title="Close debug panel"
-                >
-                  ✕
-                </button>
-              </div>
-            </div>
-            <DebugPanel
-              contractCode={fileContents[activeFile]}
-              contractName={activeFile.replace('.sol', '')}
-              onIssueClick={(line) => {
-                // Jump to line in editor
-                setCurrentLine(line);
-                // You could also scroll to the line here
-              }}
-            />
-          </div>
-        )}
       </div>
-      {/* Terminal/Output Panel - Only in IDE */}
       <div className="bottom-panel">
         <div className="terminal-content">
           <div className="terminal-header">
