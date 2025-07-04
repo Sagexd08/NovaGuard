@@ -202,7 +202,6 @@ function App() {
                 timestamp: scanResult.timestamp,
                 supportedChains: scanResult.supportedChains
               },
-              codeInsights: scanResult.data.codeInsights || {},
               riskCategory: scanResult.data.riskCategory || { label: 'unknown', justification: 'Analysis incomplete' }
             }
           };
