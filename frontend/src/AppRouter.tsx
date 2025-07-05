@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { SignedIn, SignedOut } from '@clerk/clerk-react';
 import LandingPage from './components/landing/LandingPage';
-import MainApp from './components/MainApp';
+import App from './App';
 
 const AppRouter: React.FC = () => {
   return (
@@ -17,7 +17,22 @@ const AppRouter: React.FC = () => {
           element={
             <>
               <SignedIn>
-                <MainApp />
+                <App />
+              </SignedIn>
+              <SignedOut>
+                <Navigate to="/" replace />
+              </SignedOut>
+            </>
+          } 
+        />
+        
+        {/* Dashboard route (alias for app) */}
+        <Route 
+          path="/dashboard/*" 
+          element={
+            <>
+              <SignedIn>
+                <App />
               </SignedIn>
               <SignedOut>
                 <Navigate to="/" replace />

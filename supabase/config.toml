@@ -1,6 +1,6 @@
 # A string used to distinguish different Supabase projects on the same machine.
 # Not particularly relevant if you only have one project.
-project_id = "novaguard"
+project_id = "flash-audit"
 
 [api]
 enabled = true
@@ -124,7 +124,11 @@ redirect_uri = ""
 # or any other third-party OIDC providers.
 url = ""
 
-# Edge Functions configuration is handled separately
+[edge_functions]
+enabled = true
+# Configure one of the supported request policies: `oneshot`, `per_worker`.
+# Use `oneshot` for hot reload, or `per_worker` for load testing.
+request_policy = "oneshot"
 
 [analytics]
 enabled = false
