@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.14",
-    "@solidity-parser/parser": "^0.18.0",
+    "@solidity-parser/parser": "^0.20.1",
     "@supabase/supabase-js": "^2.50.2",
     "axios": "^1.6.2",
     "cors": "^2.8.5",
